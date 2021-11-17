@@ -3745,7 +3745,7 @@
     };
 
     // console.log("here");
-    // console.log(process.env.API_KEY);
+    console.log(process.env.API_KEY);
 
 
     firebase.initializeApp(config);
