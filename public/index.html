@@ -1,0 +1,1194 @@
+<!doctype html>
+<html>
+
+<head>
+    <base href='./assets/' />
+    <meta name='robots' content='noindex'>
+    <link rel='canonical' href='https://www.coolmathgames.com/0-lemonade-stand' />
+    <meta charset="utf-8">
+    <title>Lemonade Stand</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta name="HandheldFriendly" content="true">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+    <meta name="theme-color" content="#efef8d">
+    <meta name="msapplication-navbutton-color" content="#efef8d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#efef8d">
+    <!-- <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon"> -->
+
+    <script src="./lemonade.js"></script>
+
+
+    <link rel="stylesheet" href="./main.css">
+
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <style type="text/css">
+        .no-select {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+        }
+    </style>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            if (document.getElementsByTagName("canvas").length) {
+                document.getElementsByTagName("body")[0].classList.add("no-select")
+            }
+        }, 2000);
+    </script>
+    <script type="text/javascript">
+        function setUserAgent(window, userAgent) {
+            // Works on Firefox, Chrome, Opera and IE9+
+            if (navigator.__defineGetter__) {
+                navigator.__defineGetter__("userAgent", function () {
+                    return userAgent;
+                });
+            } else if (Object.defineProperty) {
+                Object.defineProperty(navigator, "userAgent", {
+                    get: function () {
+                        return userAgent;
+                    }
+                });
+            }
+            // Works on Safari
+            if (window.navigator.userAgent !== userAgent) {
+                var userAgentProp = {
+                    get: function () {
+                        return userAgent;
+                    }
+                };
+                try {
+                    Object.defineProperty(window.navigator, "userAgent", userAgentProp);
+                } catch (e) {
+                    window.navigator = Object.create(navigator, {
+                        userAgent: userAgentProp
+                    });
+                }
+            }
+        }
+        if (window.navigator.userAgent.indexOf("Safari") >= 0 && "ontouchstart" in window && window.navigator.userAgent.indexOf("iPhone") == -1) {
+            //var userAgent = window.navigator.userAgent.replace("Macintosh", "iPad");
+            var userAgent = "Mozilla/5.0 (iPad; CPU OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1";
+            setUserAgent(window, userAgent);
+        }
+    </script>
+</head>
+
+<body>
+
+
+    <!--------------------------------------------  FIREBASE LEADERBOARDS  ---------------------------------------------------->
+
+    <section class="leaderboards hidden" id="screen-leaderboards">
+
+        <div class="container-leaderboard">
+            <div class="header">
+                <h2>Leaderboards</h2>
+            </div>
+
+
+
+            <div class="card-header">7 Day All Time Top 10</div>
+            <br>
+            <!-- <div class="leader-body">
+                <div id="top10users">Username</div>
+                <div id="top10scores">Highscore</div>
+                <div id="top10social">Social</div>
+                <div id="top10twitter">Social</div>
+                <div id="top10fb">Social</div>
+            </div> -->
+        </div>
+
+        <footer>
+            <p><button class="green" data-screen="screen-intro">OK</button></p>
+            <p><button class="green" data-screen="screen-tabs">tabs</button></p>
+        </footer>
+
+        </div>
+
+    </section>
+
+    <!------------------------------------------------------------------------------------------------------------------>
+
+
+    <!---------------------------- All time ----------------------------------->
+
+    <section class="tabs hidden" id="screen-tabs" style="max-width: 65%; font-size:80%;">
+
+
+        <h2>Leaderboards</h2>
+
+        <!-- ------------------------------------------------- all time top 10 ---------------------------------------------------- -->
+        <div class="container-tabs" style="max-width: 33%; float:left;">
+
+            <div style="text-align: center; font-size:20px; padding-bottom: 5px; color: black;">All Time Top 10</div>
+
+            <div class="tab">
+                <button class="tablinks22 active" onclick="openCity22(event, '7dayAllTime')">7 day</button>
+                <button class="tablinks22" onclick="openCity22(event, '14dayAllTime')">14 day</button>
+                <button class="tablinks22" onclick="openCity22(event, '30dayAllTime')">30 day</button>
+            </div>
+
+            <div style="color:blue">
+                <div style="width:33%; float:left">&nbsp;username</div>
+                <div style="width:33%; float:left; text-align: center">&nbsp;score</div>
+                <div style="width:33%; float:left">&nbsp;social</div>
+            </div>
+
+            <div id="7dayAllTime" class="tabcontent22" style="display: block;">
+                <div class="leader-body" style="width:100%;">
+                    <div id="top10users">Username</div>
+                    <div id="top10scores">Highscore</div>
+                    <div id="top10social">Social</div>
+                    <div id="top10twitter">Social</div>
+                    <div id="top10fb">Social</div>
+                </div>
+            </div>
+
+            <div id="14dayAllTime" class="tabcontent22">
+                <div class="leader-body14">
+                    <div id="top10users14">Username</div>
+                    <div id="top10scores14">Highscore</div>
+                    <div id="top10social14">Social</div>
+                    <div id="top10twitter14">Social</div>
+                    <div id="top10fb14">Social</div>
+                </div>
+            </div>
+
+            <div id="30dayAllTime" class="tabcontent22">
+                <div class="leader-body30">
+                    <div id="top10users30">Username</div>
+                    <div id="top10scores30">Highscore</div>
+                    <div id="top10social30">Social</div>
+                    <div id="top10twitter30">Social</div>
+                    <div id="top10fb30">Social</div>
+                </div>
+            </div>
+
+            <script>
+                function openCity22(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent22");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks22");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
+
+        </div>
+
+
+        <!-- ------------------------------------------------ 24 hour top 10 ------------------------------------------------------------- -->
+
+
+        <div class="container-tabs" style="max-width: 33%; float:left;">
+
+            <div style="text-align: center; font-size:20px; padding-bottom: 5px; color: black;">24 Hour Top 10</div>
+
+
+            <div class="tab">
+                <button class="tablinks active" onclick="openCity(event, '7day24hour')">7 day</button>
+                <button class="tablinks" onclick="openCity(event, '14day24hour')">14 day</button>
+                <button class="tablinks" onclick="openCity(event, '30day24hour')">30 day</button>
+            </div>
+
+            <div style="color:blue">
+                <div style="width:33%; float:left">&nbsp;username</div>
+                <div style="width:33%; float:left; text-align: center">&nbsp;score</div>
+                <div style="width:33%; float:left">&nbsp;social</div>
+            </div>
+
+            <div id="7day24hour" class="tabcontent" style="display: block;">
+                <div class="leader-body">
+                    <div id="top10users24">Username12</div>
+                    <div id="top10scores24">Highscore</div>
+                    <div id="top10social24">Social</div>
+                    <div id="top10twitter24">Social</div>
+                    <div id="top10fb24">Social</div>
+                </div>
+            </div>
+
+            <div id="14day24hour" class="tabcontent">
+                <div class="leader-body14">
+                    <div id="top10users24-14">Username</div>
+                    <div id="top10scores24-14">Highscore</div>
+                    <div id="top10social24-14">Social</div>
+                    <div id="top10twitter24-14">Social</div>
+                    <div id="top10fb24-14">Social</div>
+                </div>
+            </div>
+
+            <div id="30day24hour" class="tabcontent">
+                <div class="leader-body30">
+                    <div id="top10users24-30">Username</div>
+                    <div id="top10scores24-30">Highscore</div>
+                    <div id="top10social24-30">Social</div>
+                    <div id="top10twitter24-30">Social</div>
+                    <div id="top10fb24-30">Social</div>
+                </div>
+            </div>
+
+            <script>
+                function openCity(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
+
+        </div>
+
+        <!-- --------------------------------------------- 30 day top 10 ---------------------------------------------------- -->
+
+        <div class="container-tabs" style="max-width: 33%; float:left;">
+
+            <div style="text-align: center; font-size:20px; padding-bottom: 5px; color: black;">30 Day Top 10</div>
+
+
+            <div class="tab">
+                <button class="tablinks33 active" onclick="openCity33(event, '7day30day')">7 day</button>
+                <button class="tablinks33" onclick="openCity33(event, '14day30day')">14 day</button>
+                <button class="tablinks33" onclick="openCity33(event, '30day30day')">30 day</button>
+            </div>
+
+            <div style="color:blue">
+                <div style="width:33%; float:left">&nbsp;username</div>
+                <div style="width:33%; float:left; text-align: center">&nbsp;score</div>
+                <div style="width:33%; float:left">&nbsp;social</div>
+            </div>
+
+            <div id="7day30day" class="tabcontent33" style="display: block;">
+                <div class="leader-body">
+                    <div id="top10users30day-7">Username</div>
+                    <div id="top10scores30day-7">Highscore</div>
+                    <div id="top10social30day-7">Social</div>
+                    <div id="top10twitter30day-7">Social</div>
+                    <div id="top10fb30day-7">Social</div>
+                </div>
+            </div>
+
+            <div id="14day30day" class="tabcontent33">
+                <div class="leader-body14">
+                    <div id="top10users30day-14">Username</div>
+                    <div id="top10scores30day-14">Highscore</div>
+                    <div id="top10social30day-14">Social</div>
+                    <div id="top10twitter30day-14">Social</div>
+                    <div id="top10fb30day-14">Social</div>
+                </div>
+            </div>
+
+            <div id="30day30day" class="tabcontent33">
+                <div class="leader-body30">
+                    <div id="top10users30day-303">Username</div>
+                    <div id="top10scores30day-303">Highscore</div>
+                    <div id="top10social30day-303">Social</div>
+                    <div id="top10twitter30day-303">Social</div>
+                    <div id="top10fb30day-303">Social</div>
+                </div>
+            </div>
+
+            <script>
+                function openCity33(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent33");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks33");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
+
+        </div>
+
+        <!-- -------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+        <footer>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <div style="width: 850px;">
+                <p style="float: left;"><button class="green" data-screen="screen-intro">Rules</button></p>
+                <p style="float: right;"><button class="green" data-screen="screen-main">Start</button></p>
+                <!-- <p><button class="green" data-screen="screen-30day">30day</button></p> -->
+            </div>
+        </footer>
+
+    </section>
+
+    <!---------------------------- 24 hour ----------------------------------->
+
+    <section class="24hour hidden" id="screen-24hour">
+
+
+        <h2>Past 24 Hours Top 10</h2>
+        <!-- <div class="container-tabs">
+
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, '7day24hour')">7 day</button>
+                <button class="tablinks" onclick="openCity(event, '14day24hour')">14 day</button>
+                <button class="tablinks" onclick="openCity(event, '30day24hour')">30 day</button>
+            </div>
+
+            <div id="7day24hour" class="tabcontent" style="display: block;">
+                <div class="leader-body">
+                    <div id="top10users24">Username12</div>
+                    <div id="top10scores24">Highscore</div>
+                    <div id="top10social24">Social</div>
+                    <div id="top10twitter24">Social</div>
+                    <div id="top10fb24">Social</div>
+                </div>
+            </div>
+
+            <div id="14day24hour" class="tabcontent">
+                <div class="leader-body14">
+                    <div id="top10users24-14">Username</div>
+                    <div id="top10scores24-14">Highscore</div>
+                    <div id="top10social24-14">Social</div>
+                    <div id="top10twitter24-14">Social</div>
+                    <div id="top10fb24-14">Social</div>
+                </div>
+            </div>
+
+            <div id="30day24hour" class="tabcontent">
+                <div class="leader-body30">
+                    <div id="top10users24-30">Username</div>
+                    <div id="top10scores24-30">Highscore</div>
+                    <div id="top10social24-30">Social</div>
+                    <div id="top10twitter24-30">Social</div>
+                    <div id="top10fb24-30">Social</div>
+                </div>
+            </div>
+
+            <footer>
+                <p><button class="green" data-screen="screen-30day">30 day</button></p>
+                <p><button class="green" data-screen="screen-tabs">All time</button></p>
+            </footer>
+
+            <script>
+                function openCity(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
+
+        </div> -->
+
+    </section>
+
+
+
+    <!---------------------------- 30 day ----------------------------------->
+
+    <section class="30day hidden" id="screen-30day">
+
+
+        <!-- <h2>Past 30 Days Top 10</h2>
+        <div class="container-tabs">
+
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, '7day30day')">7 day</button>
+                <button class="tablinks" onclick="openCity(event, '14day30day')">14 day</button>
+                <button class="tablinks" onclick="openCity(event, '30day30day')">30 day</button>
+            </div>
+
+            <div id="7day30day" class="tabcontent" style="display: block;">
+                <div class="leader-body">
+                    <div id="top10users30day-7">Username</div>
+                    <div id="top10scores30day-7">Highscore</div>
+                    <div id="top10social30day-7">Social</div>
+                    <div id="top10twitter30day-7">Social</div>
+                    <div id="top10fb30day-7">Social</div>
+                </div>
+            </div>
+
+            <div id="14day30day" class="tabcontent">
+                <div class="leader-body14">
+                    <div id="top10users30day-14">Username</div>
+                    <div id="top10scores30day-14">Highscore</div>
+                    <div id="top10social30day-14">Social</div>
+                    <div id="top10twitter30day-14">Social</div>
+                    <div id="top10fb30day-14">Social</div>
+                </div>
+            </div>
+
+            <div id="30day30day" class="tabcontent">
+                <div class="leader-body30">
+                    <div id="top10users30day-303">Username</div>
+                    <div id="top10scores30day-303">Highscore</div>
+                    <div id="top10social30day-303">Social</div>
+                    <div id="top10twitter30day-303">Social</div>
+                    <div id="top10fb30day-303">Social</div>
+                </div>
+            </div>
+
+            <footer>
+                <p><button class="green" data-screen="screen-tabs">All Time</button></p>
+                <p><button class="green" data-screen="screen-24hour">24Hour</button></p>
+            </footer>
+
+            <script>
+                function openCity(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
+
+        </div> -->
+
+    </section>
+    <!------------------------------------------------------------------------------------------------------------------>
+
+
+
+    <!--------------------------------------------  1.INTRODUCTION  ---------------------------------------------------->
+    <section class="intro hidden" id="screen-intro" style="max-width: 100%;">
+
+        <div>
+            <div class="header">
+                <h2>Introduction</h2>
+            </div>
+
+            <div style="font-size: 96%">
+                <p>You have 7, 14, or 30 days to make as much money as possible selling 8-Bit Cannabis! You’ll have
+                    complete control over pricing, inventory, marketing, security and supplies.</p>
+                <p>Secret Sauce to success: You will start with $5000 to begin purchasing your inventory, and overhead
+                    costs to start selling 8-Bit Cannabis. Make sure you buy enough of everything, or you won’t be able
+                    to sell if you run out!</p>
+                <p>Weather: This plays a big role in customer demand. Read the weather report every day! When the
+                    temperature is low, or the weather is bad (overcast, cloudy, rain), don’t expect to sell as much,and
+                    buy accordingly. Set your prices higher on hot, sunny days to increase profit, even if you sell less
+                    8-Bit Cannabis.</p>
+                <p>Customer Satisfaction: As you sell your 8-Bit Cannabis, people will decide how much they like or
+                    dislike it. If your popularity is low, fewer people will buy, even if the weather is hot and sunny.
+                    But if you increase your popularity, you’ll do okay even when it’s cold and rainy!</p>
+                <p>At the end of 7, 14, or 30 days you’ll see how much money you made. Try to beat your high score!</p>
+            </div>
+
+            <footer>
+                <p><button class="green" data-screen="screen-main">Start</button>
+                    <button style="width: 120px;" class="green" data-screen="screen-tabs">Leaderboards</button></p>
+            </footer>
+        </div>
+    </section>
+    <!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+
+
+
+    <!----------------------------------------------  2.DURATION  -------------------------------------------------------->
+    <section class="main hidden" id="screen-main">
+        <div>
+            <div class="header">
+                <h1>Cannabis Stand</h1>
+            </div>
+
+            <div class="options">
+                <p>How&nbsp;long would&nbsp;you like&nbsp;to&nbsp;play?</p>
+                <ul>
+                    <li><button class="big green" data-duration="7">7 days</button></li>
+                    <li><button class="big orange" data-duration="14">14 days</button></li>
+                    <li><button class="big red" data-duration="30">30 days</button></li>
+                </ul>
+            </div>
+
+            <footer>
+
+
+                <div>
+                    <p style="float: left"><button style="width: 100px" class="green" data-screen="screen-intro">Rules</button></p>
+                    <p style="float: right"><button style="width: 120px" class="green" data-screen="screen-tabs">Leaderboards</button></p>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+    <!-------------------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+    <!--------------------------------------------  3.INVENTORY/PURCHASING  ---------------------------------------------->
+    <section class="inventory hidden" id="screen-inventory">
+        <div>
+            <div class="header">
+                <h2>Inventory/Purchasing</h2>
+            </div>
+
+            <div>
+                <div>
+                    <h3 class="center">You have <span data-value="money"></span> and:</h3>
+                    <ul class="inventory">
+                        <li><span data-value="cups"></span> Jars <button data-screen="screen-acquisition-paper-cups">Buy
+                                More Jars</button></li>
+                        <li><span data-value="lemons"></span> Grams <button data-screen="screen-acquisition-lemons">Buy
+                                Cannabis</button></li>
+                        <li><span data-value="sugar"></span> Flyers <button data-screen="screen-acquisition-sugar">Buy
+                                More Ads</button></li>
+                        <li><span data-value="ice"></span> Guards <button data-screen="screen-acquisition-ice">Buy
+                                Security</button></li>
+                    </ul>
+                    <ul class="actions">
+                        <li class="left"><button class="small red season-report">Bankrupt!</button></li>
+                        <li class="right"><button class="small orange"
+                                data-screen="screen-inventory-help">Help!</button></li>
+                        <li class="center"><button class="big green" data-screen="screen-price">OK</button></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+
+
+        </div>
+    </section>
+
+    <!---------------3.help-------------->
+    <section class="intro hidden" id="screen-inventory-help">
+        <div>
+            <div class="header">
+                <h2>Inventory/Purchasing Help</h2>
+            </div>
+            <div style="font-size: 80%">
+                <p>It’s hugely important to manage your inventory well, or you’ll quickly go out of business. How much
+                    you need depends on a few things.</p>
+                <p>Number of customers: If the weather is bad, and your price is high, don't expect more than 15-25
+                    customers. But if the weather is hot and clear, and your prices are reasonable, expect 50-75.
+                </p>
+                <p>Glass Jars and 8-Bit Cannabis: You need one glass jar per customer, plus however many grams of 8-Bit
+                    cannabis you decide to put in each jar.
+                </p>
+                <p>Flyers and Security Guards: The number of flyers you give out in a day will affect how many customers
+                    come to your stand. More flyer$ = More customer$$
+                    The number of security guards you have will affect how many customers you see. Customers want to
+                    feel safe when making their purchases, more $ecurity = More Customer$
+
+                </p>
+                <p>It's always better to buy a little extra than to not have enough.</p>
+                <p>A few more tips: Your glass jars won’t go bad, so always have plenty. Your security guards are just
+                    available for the day and you will need to rehire the guards each day. Same goes for flyers, you
+                    need to purchase marketing advertisements in order to reach your customers on a daily basis. Your
+                    8-Bit Cannabis will usually be OK for a few days, but may sometimes be smoked by employees!</p>
+            </div>
+            <footer>
+                <p><button class="green" data-screen="screen-inventory">OK</button></p>
+            </footer>
+        </div>
+    </section>
+    <!----------------------------------->
+
+
+    <!----------------------------- 3.Acquisition.cups ---------------------------->
+    <section class="inventory hidden" id="screen-acquisition-paper-cups">
+        <div>
+            <div class="header">
+                <h2>Acquisition: Jars</h2>
+            </div>
+            <div>
+                <div>
+                    <h3 class="center">You have <span data-value="cups"></span> Jars and <span
+                            data-value="money"></span></h3>
+                    <ul class="inventory">
+                        <li>You can buy:</li>
+                        <li data-can-afford="priceCups1">25 Jars for <span data-value="priceCups1"></span> <button
+                                class="short" data-buy="25,cups,priceCups1">Buy It!</button></li>
+                        <li data-can-afford="priceCups2">50 Jars for <span data-value="priceCups2"></span> <button
+                                class="short" data-buy="50,cups,priceCups2">Buy It!</button></li>
+                        <li data-can-afford="priceCups3">100 Jars for <span data-value="priceCups3"></span>
+                            <button class="short" data-buy="100,cups,priceCups3">Buy It!</button></li>
+                    </ul>
+                    <ul class="actions">
+                        <li class="center"><button class="big green" data-screen="screen-inventory">OK</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!----------------------------- 3.Acquisition.lemons -------------------------->
+    <section class="inventory hidden" id="screen-acquisition-lemons">
+        <div>
+            <div class="header">
+                <h2>Acquisition: 8-bit Cannabis</h2>
+            </div>
+
+            <div>
+                <div>
+                    <h3 class="center">You have <span data-value="lemons"></span> Grams of Cannabis and <span
+                            data-value="money"></span></h3>
+                    <p>You can buy:</p>
+                    <ul class="inventory">
+                        <li data-can-afford="priceLemons1">10 Grams for <span data-value="priceLemons1"></span> <button
+                                class="short" data-buy="10,lemons,priceLemons1">Buy It!</button></li>
+                        <li data-can-afford="priceLemons2">30 Grams for <span data-value="priceLemons2"></span> <button
+                                class="short" data-buy="30,lemons,priceLemons2">Buy It!</button></li>
+                        <li data-can-afford="priceLemons3">75 Grams for <span data-value="priceLemons3"></span> <button
+                                class="short" data-buy="75,lemons,priceLemons3">Buy It!</button></li>
+                    </ul>
+                    <ul class="actions">
+                        <li class="center"><button class="big green" data-screen="screen-inventory">OK</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!----------------------------- 3.Acquisition.sugar --------------------------->
+    <section class="inventory hidden" id="screen-acquisition-sugar">
+        <div>
+            <div class="header">
+                <h2>Acquisition: Advertisement</h2>
+            </div>
+
+            <div>
+                <div>
+                    <h3 class="center">You have <span data-value="sugar"></span> Flyers and <span
+                            data-value="money"></span></h3>
+                    <p>You can buy:</p>
+                    <ul class="inventory">
+                        <li data-can-afford="priceSugar1">8 Flyers for <span data-value="priceSugar1"></span>
+                            <button class="short" data-buy="8,sugar,priceSugar1">Buy It!</button></li>
+                        <li data-can-afford="priceSugar2">20 Flyers for <span data-value="priceSugar2"></span>
+                            <button class="short" data-buy="20,sugar,priceSugar2">Buy It!</button></li>
+                        <li data-can-afford="priceSugar3">48 Flyers for <span data-value="priceSugar3"></span>
+                            <button class="short" data-buy="48,sugar,priceSugar3">Buy It!</button></li>
+                    </ul>
+                    <ul class="actions">
+                        <li class="center"><button class="big green" data-screen="screen-inventory">OK</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!----------------------------- 3.Acquisition.ice ----------------------------->
+    <section class="inventory hidden" id="screen-acquisition-ice">
+        <div>
+            <div class="header">
+                <h2>Acquisition: Security</h2>
+            </div>
+
+            <div>
+                <div>
+                    <h3 class="center">You have <span data-value="ice"></span> Security Guards and <span
+                            data-value="money"></span></h3>
+                    <p>You can hire:</p>
+                    <ul class="inventory">
+                        <li data-can-afford="priceIce1">1 Guard for <span data-value="priceIce1"></span> <button
+                                class="short" data-buy="1,ice,priceIce1">Buy It!</button></li>
+                        <li data-can-afford="priceIce2">2 Guards for <span data-value="priceIce2"></span> <button
+                                class="short" data-buy="2,ice,priceIce2">Buy It!</button></li>
+                        <li data-can-afford="priceIce3">5 Guards for <span data-value="priceIce3"></span> <button
+                                class="short" data-buy="5,ice,priceIce3">Buy It!</button></li>
+                    </ul>
+                    <ul class="actions">
+                        <li class="center"><button class="big green" data-screen="screen-inventory">OK</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!------------------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+    <!--------------------------------------------  4.PRICE/QUALITY CONTROL  ------------------------------------------------>
+    <section class="inventory hidden" id="screen-price">
+        <div>
+            <div class="header">
+                <h2>Price/Quality Control</h2>
+            </div>
+
+            <div>
+                <div>
+                    <form>
+                        <ul class="inventory">
+                            <li><label for="field-price-per-cup">Price per 8-bit Jar:</label>
+                                <span class="field">
+                                    <button type="button" data-decrease="field-price-per-cup">­­−</button>
+                                    <input type="number" value="" data-value="price" min="1" max="100" step="1" required
+                                        id="field-price-per-cup" pattern="\d+">
+                                    <button type="button" data-increase="field-price-per-cup">+</button>
+                                    Dollars</span></li>
+                            <li><label for="field-lemons-per-pitcher">Grams per Jar:</label>
+                                <span class="field">
+                                    <button type="button" data-decrease="field-lemons-per-pitcher">­­−</button>
+                                    <input type="number" value="" data-value="recipeLemons" min="0" max="99" step="1"
+                                        required id="field-lemons-per-pitcher">
+                                    <button type="button" data-increase="field-lemons-per-pitcher">+</button>
+                                    Grams</span></li>
+                            <li><label for="field-sugar-per-pitcher">Flyers per Day:</label>
+                                <span class="field">
+                                    <button type="button" data-decrease="field-sugar-per-pitcher">­­−</button>
+                                    <input type="number" value="" data-value="recipeSugar" min="0" max="99" step="1"
+                                        required id="field-sugar-per-pitcher">
+                                    <button type="button" data-increase="field-sugar-per-pitcher">+</button>
+                                    Ads</span></li>
+                            <li><label for="field-ice-per-cup">Security per Day:</label>
+                                <span class="field">
+                                    <button type="button" data-decrease="field-ice-per-cup">­­−</button>
+                                    <input type="number" value="" data-value="recipeIce" min="0" max="5" step="1"
+                                        required id="field-ice-per-cup">
+                                    <button type="button" data-increase="field-ice-per-cup">+</button>
+                                    Guards</span></li>
+                        </ul>
+                        <p class="action"><button type="button" data-screen="screen-inventory">Back to Store!</button>
+                        </p>
+                        <ul class="actions">
+                            <li class="left"><button type="button" class="small red season-report">Bankrupt!</button>
+                            </li>
+                            <li class="right"><button type="button" class="small orange"
+                                    data-screen="screen-price-help">Help!</button></li>
+                            <li class="center"><button class="big green start-day" type="submit">OK</button></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!------- 4.help -------->
+    <section class="intro hidden" id="screen-price-help">
+        <div>
+            <div class="header">
+                <h2>Price/Quality Control Help</h2>
+            </div>
+            <div>
+                <p>As the weather becomes hotter and clearer, demand for 8-Bit Cannabis goes up and customers will pay
+                    more for it. In bad weather, customers won't pay as much.</p>
+                <p>The number of grams you decide to put in each glass jar will affect the demand of your product and
+                    the happiness of your customers. Most customers will expect at least 3 grams per jar. You can reduce
+                    that to cut costs, but you’ll also reduce demand. Also, by adding more 8-Bit Cannabis to each jar,
+                    you’ll make a better product that customers will pay more for.</p>
+                <p>The amount of flyers you are able to give out each day will determine the amount of customers you see
+                    in a day. The security guards provide safety and a sense of assurance for your customers. You want
+                    them to feel safe so that they come back often to get more 8-Bit Cannabis!</p>
+            </div>
+            <footer>
+                <p><button class="green" data-screen="screen-price">OK</button></p>
+            </footer>
+        </div>
+    </section>
+    <!----------------------->
+
+
+    <!----------------------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+    <!--------------------------------------------  5.Game start  ------------------------------------------------>
+
+    <section class="simulation hidden" id="screen-simulation">
+        <div>
+            <div class="scene sunny">
+                <canvas width="572" height="396"></canvas>
+                <p class="time">Time: <span></span></p>
+                <p class="price">
+                    <span class="slider"><button class="small">$</button></span>
+                    Price per Jar: <span data-value="price"></span>
+                </p>
+                <p class="inventory">
+                    <span>Jars: <span data-value="cups"></span></span>
+                    <span>Guards: <span data-value="shownSecurity"></span></span>
+                    <span>Grams: <span data-value="lemons"></span></span>
+                    <span>Flyers: <span data-value="shownFlyers"></span></span>
+                    <span>Jars in Batch: <span data-context="inPitcher"></span></span>
+                </p>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="center"><button class="speed"><span>Fast Forward</span><span>Normal Speed</span></button>
+                    </p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+
+
+
+
+
+    <!----------------------------------------------  END OF DAY REPORT  ------------------------------------------------------->
+    <section class="day hidden" id="screen-day">
+        <div>
+            <div class="header">
+                <h2>End of Day Report</h2>
+            </div>
+
+            <div>
+                <div>
+                    <p>You managed to sell <span data-context="totalSold"></span> cups to <span
+                            data-context="totalCustomers"></span> potential customers.<br>
+                        Considering the weather, I'd say this is <span data-context="pitch"></span></p>
+
+                    <p>Your Customer Satisfaction:
+                        <span class="progress-bar satisfaction"><span class="bar" style="width: 0"></span> <span
+                                class="value"></span></span>
+                    </p>
+
+                    <p>Your Popularity:
+                        <span class="progress-bar popularity"><span class="bar" style="width: 0"></span> <span
+                                class="value"></span></span>
+                    </p>
+
+                    <!-- <p class="action"><button class="big green losses">OK</button></p> -->
+                    <p class="action"><button class="big green next-day">OK</button></p>
+
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!--------------------------------------------------  LOSSES SCREEN  ------------------------------------------------------->
+    <section class="losses hidden" id="screen-losses">
+        <div>
+            <div class="header">
+                <h2>Inventory Losses</h2>
+            </div>
+
+            <div>
+                <div>
+
+                    <p class="losses-security"><span>Your security guards are done for the day !</span></p>
+                    <p class="losses-lemons"><span data-context="lostLemons"></span> of your remaining grams of Cannabis
+                        were smoked by employees!</p>
+                    <!-- <p class="losses-sugar">Bugs in the sugar! All remaining sugar needs discarded.</p> -->
+                    <p class="action"><button class="big green new-day">OK</button></p>
+                </div>
+            </div>
+
+            <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!----------------------------------------------  END OF SEASON REPORT  ---------------------------------------------------->
+    <section class="season hidden" id="screen-season">
+        <div>
+            <div class="header">
+                <h2>End of Season Report</h2>
+            </div>
+
+            <div>
+                <div>
+                    <table style="padding: 0; margin:0;">
+                        <tbody>
+                            <tr>
+                                <th>Total Income:</th>
+                                <td class="green" data-value="totalIncome"></td>
+                            </tr>
+                            <tr>
+                                <th>Total Expenses:</th>
+                                <td class="red" data-value="totalExpenses"></td>
+                            </tr>
+                            <tr>
+                                <th>Liquidated Inventory Value:</th>
+                                <td class="green" data-context="inventoryValue"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Net Profit/Loss:</th>
+                                <td><span id="user-score" data-context="outcome"></span><span
+                                        class="green new-highscore">New High
+                                        Score!</span></td>
+                            </tr>
+                            <tr class="previous-highscore">
+                                <th>Previous Best:</th>
+                                <td class="red" data-context="previousHighscore"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <p class="result" data-context="result"></p>
+
+
+                    <!------------ User Form -------------->
+                    <div>
+                        <p>
+                            <label for="form">Enter for a chance to win!</label>
+
+                            <div id="error"></div>
+
+                            <form id="form" class="login-form" action="/" method="GET">
+
+                                <!-- ---------------------------------------- -->
+                                <!-- <div class="input-group">
+
+
+                                    <div style="width:50%; float:left; text-align:end;">
+                                        <div>
+                                            <label for="user-name">username</label>
+                                            <input id="user-name-input" placeholder="username" type="text" required>
+                                        </div>
+
+                                        <div>
+                                            <label for="email">email</label>
+                                            <input type="email" id="user-email-input" placeholder="email" required>
+                                        </div>
+
+                                        <div>
+                                            <label for="phone">mobile</label>
+                                            <input id="user-phone-input" placeholder="(626) 408-8278" type="tel"
+                                                maxlength="16" pattern=".{16,}" required>
+                                        </div>
+                                    </div>
+
+                                    <div style="width:50%; float:left; text-align:left">
+                                        <div>
+                                            <svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" fill="currentColor" class="bi bi-instagram"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+                                                </svg>
+                                            <input id="user-instagram-input" placeholder="social iG" type="text">
+                                        </div>
+
+                                        <div>
+                                            <svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" fill="currentColor" class="bi bi-twitter"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+                                                </svg>
+                                            <input id="user-twitter-input" placeholder="social Twi" type="text">
+                                        </div>
+
+                                        <div>
+                                            <svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" fill="currentColor" class="bi bi-facebook"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                                </svg>
+                                            <input id="user-facebook-input" placeholder="social Fb" type="text">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+
+                                 <div style="margin:5px;">
+                                    <button style="top:5px;" type="submit" class="green add-user-btn">submit</button>
+                                </div> -->
+
+                                <!---------- terms/email checkbox------------>
+                                <!-- <div style="font-size: 8px; padding:10px;">
+                                    <input type="checkbox" name="terms" id="terms" required>
+                                    <a href="https://www.google.com" target="_blank">I agree to Terms & Conditions</a>
+                                    <input type="checkbox" name="promotion" id="promotion" checked>
+                                    <a href="https://www.google.com" target="_blank">I agree to recieve emails</a>
+                                </div> -->
+
+                            </form>
+                        </p>
+
+                        <p style="padding-top:5px;" class="action">
+                            <button data-screen="screen-tabs">Play Again?</button>
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <!----------------------- Footer -------------------------->
+            <!-- <footer>
+                <div>
+                    <p class="left">Day: <span data-value="day"></span> of <span data-value="duration"></span><br>Money:
+                        <span data-value="money"></span></p>
+                    <p class="right">Temperature: <span data-value="temperature"></span><br>Weather: <span
+                            data-value="weather"></span></p>
+                </div>
+            </footer> -->
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+    <script src="lemonade.js"></script>
+    <script>function fnSendMsg(evt) {
+            window.parent.postMessage('keypress-from-game', '*');
+        }
+        document.body.addEventListener('click', function (event) {
+            fnSendMsg(event);
+        });
+        document.addEventListener('keypress', function (event) {
+            fnSendMsg(event);
+        });
+        document.addEventListener('keydown', function (e) {
+            fnSendMsg(event);
+        });
+        document.addEventListener('keyup', function (e) {
+            fnSendMsg(event);
+        });
+    </script>
+
+
+
+</body>
+
+</html>
