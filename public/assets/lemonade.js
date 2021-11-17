@@ -3744,6 +3744,8 @@
       storageBucket: "cannabisstand-dfdcb.appspot.com"
     };
 
+    // console.log("here");
+    // console.log(process.env.API_KEY);
 
 
     firebase.initializeApp(config);
