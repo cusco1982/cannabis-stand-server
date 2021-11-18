@@ -3734,8 +3734,7 @@
     // -------------------------------------------------------------------------------------
 
 
-    const dotenv = require("dotenv");
-    dotenv.config();
+
     // ----------------------------- FIREBASE --------------------------------
 
     var config = {
@@ -3745,8 +3744,6 @@
       storageBucket: "cannabisstand-dfdcb.appspot.com"
     };
 
-    // console.log("here");
-    console.log(process.env.API_KEY);
 
 
     firebase.initializeApp(config);
