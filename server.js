@@ -12,13 +12,11 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// console.log("here");
-console.log(process.env.API_KEY);
 
 //routes
 require("./routes/html-routes.js")(app);
 
 
-app.listen(PORT, function() {
-    console.log("Server listening on: http://localhost:" + PORT);
+app.listen(PORT, function () {
+  console.log("Server listening on: http://localhost:" + PORT);
 });

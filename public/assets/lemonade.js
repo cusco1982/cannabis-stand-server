@@ -3734,7 +3734,6 @@
     // -------------------------------------------------------------------------------------
 
 
-
     // ----------------------------- FIREBASE --------------------------------
 
     var config = {
@@ -3743,7 +3742,6 @@
       databaseURL: "https://cannabisstand-dfdcb-default-rtdb.firebaseio.com",
       storageBucket: "cannabisstand-dfdcb.appspot.com"
     };
-
 
 
     firebase.initializeApp(config);
