@@ -3984,6 +3984,9 @@
           var twitterShell = "https://www.twitter.com/"
           var fbShell = "https://www.facebook.com/"
 
+
+          // code insert here --------->
+          
           users1.innerHTML = (index + 1) + ". " + top10users7day;
           scores1.innerHTML = user.score;
 
