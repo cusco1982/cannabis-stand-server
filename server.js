@@ -10,7 +10,6 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 
-//app.use(express.static(process.cwd() + "public"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -53,12 +52,6 @@ app.get("/7alltimetop10", function (req, res) {
       userObjsArray.push(userObj);
     }
     userObjsArray.sort(function (a, b) { return b.score - a.score })
-
-    // await userObjsArray.forEach((user, index) => {
-    //     database.ref('users').child(user.userKey).once("value", function (snapshot) {
-    //         console.log(snapshot.val());
-    //     })
-    // })
 
     for (let i = 0; i < userObjsArray.length; i++) {
       const userkey = userObjsArray[i].userKey

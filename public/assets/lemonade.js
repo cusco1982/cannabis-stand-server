@@ -3694,48 +3694,6 @@
 
 
 
-    // ------------------------------ mobile number format logic ------------------------------
-    // const isNumericInput = (event) => {
-    //   const key = event.keyCode;
-    //   return ((key >= 48 && key <= 57) || // Allow number line
-    //     (key >= 96 && key <= 105) // Allow number pad
-    //   );
-    // };
-    // const isModifierKey = (event) => {
-    //   const key = event.keyCode;
-    //   return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
-    //     (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
-    //     (key > 36 && key < 41) || // Allow left, up, right, down
-    //     (
-    //       // Allow Ctrl/Command + A,C,V,X,Z
-    //       (event.ctrlKey === true || event.metaKey === true) &&
-    //       (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
-    //     )
-    // };
-    // const enforceFormat = (event) => {
-    //   // Input must be of a valid number format or a modifier key, and not longer than ten digits
-    //   if (!isNumericInput(event) && !isModifierKey(event)) {
-    //     event.preventDefault();
-    //   }
-    // };
-    // const formatToPhone = (event) => {
-    //   if (isModifierKey(event)) { return; }
-    //   const input = event.target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
-    //   const areaCode = input.substring(0, 3);
-    //   const middle = input.substring(3, 6);
-    //   const last = input.substring(6, 10);
-    //   if (input.length > 6) { event.target.value = `(${areaCode}) ${middle} - ${last}`; }
-    //   else if (input.length > 3) { event.target.value = `(${areaCode}) ${middle}`; }
-    //   else if (input.length > 0) { event.target.value = `(${areaCode}`; }
-    // };
-    // const inputElement = document.getElementById('user-phone-input');
-    // inputElement.addEventListener('keydown', enforceFormat);
-    // inputElement.addEventListener('keyup', formatToPhone);
-    // -------------------------------------------------------------------------------------
-
-
-
-
 
 
     // ------------------------------------------------- FIREBASE --------------------------------------------------------
@@ -4371,46 +4329,6 @@
     });
 
 
-    // button('button.losses', function () {
-    //   // state.data.ice = 0;
-    //   let lostSecurity;
-
-    // var lostLemons = false;
-    // // var lostLemons = 0;
-    // // if (Math.random() < 0.25) {
-    // //   lostLemons = Math.floor(Math.random() * state.data.lemons * 0.5);
-    // //   state.data.lemons -= lostLemons;
-    // // }
-
-    //   if (state.data.sugar >= state.data.recipeSugar)
-    //     state.data.sugar -= state.data.recipeSugar;
-    //   // console.log("you used `$.(state.data.recipeSugar)` fliers today!");
-    //   var lostSugar = false;
-
-    //   // if (state.data.sugar && Math.random() < 0.05) {
-    //   //   state.data.sugar = 0;
-    //   //   lostSugar = true;
-    //   // }
-
-    //   if (state.data.ice >= state.data.recipeIce)
-    //     state.data.ice -= state.data.recipeIce;
-
-    //   if (state.data.shownSecurity > 0 || state.data.shownSecurity != 0) {
-    //     lostSecurity = true;
-    //   } else {
-    //     lostSecurity = false;
-    //   }
-
-    //   var screen = showScreen('screen-losses', { 'lostLemons': lostLemons });
-
-
-    //   var screen = showScreen('screen-losses', { 'lostLemons': lostLemons });
-    //   screen.element.querySelector('.losses-security').style.display = lostSecurity ? 'block' : 'none';
-    //   screen.element.querySelector('.losses-lemons').style.display = lostLemons ? 'block' : 'none';
-    //   screen.element.querySelector('.losses-sugar').style.display = lostSugar ? 'block' : 'none';
-    // });
-
-
     function showSeasonReport() {
       var inventoryValue = state.data.cups * 1 + state.data.lemons * 3.2 + state.data.sugar * 8 + state.data.ice * 160;
       var outcome = inventoryValue + state.data.totalIncome - state.data.totalExpenses;
@@ -4500,13 +4418,13 @@
     });
 
     button('button.next-day', function () {
-      // console.log(state.data.shownSecurity);
+
       let lostLemons;
       if (state.data.lemons && Math.random() < 0.25) {
         lostLemons = Math.floor(Math.random() * state.data.lemons * 0.25);
         state.data.lemons -= lostLemons;
       }
-      // console.log(lostLemons)
+
 
       if (state.data.day === state.data.duration) {
         showSeasonReport();
@@ -4771,23 +4689,14 @@
     Simulation.prototype.refillPitcher = function () {
       if (this.inPitcher === 0 &&
         state.data.lemons >= state.data.recipeLemons
-        // &&
-        // state.data.sugar >= state.data.recipeSugar
+
       ) {
         this.inPitcher = 8 + state.data.recipeLemons;
 
-        // if (state.data.lemons < state.data.recipeLemons)
-        //   this.inPitcher = state.data.lemons / state.data.recipeLemons;
-        // if ( state.data.lemons < state.data.recipeLemons)
-        //   this.inPitcher = state.data.lemons / state.data.cups;
-
-
-        // state.data.lemons -= state.data.recipeLemons;
-        // state.data.sugar -= state.data.recipeSugar;
       }
 
       if (this.inPitcher === 0 || state.data.cups === 0 ||
-        // state.data.ice < state.data.recipeIce)
+
         state.data.lemons < state.data.recipeLemons)
         this.soldOut = true;
     };
@@ -4798,8 +4707,6 @@
 
         ((state.data.temperatureFarenheit - 50) / 200 + (5 - this.weatherIndex) / 20) * .25;
 
-      // *
-      //   (((state.data.temperatureFarenheit / 2) - state.data.price) / (state.data.temperatureFarenheit / 2) + 1);
 
       demand *= 55 / state.data.price;
 
@@ -4810,22 +4717,12 @@
 
       demand *= (state.data.recipeLemons) / 4;
 
-      // demand *= (state.data.recipeSugar + 4) / 8;
 
       if (state.data.ice > state.data.recipeIce)
         demand *= (state.data.recipeIce) + 4 / 4;
 
-
-      // for (var i = 0; i < this.customers.length; i++) {
-      //   var customer = this.customers[i];
-      //   if (customer.bubbleTime > 0)
-      //     demand *= customer.bubble === 0 ? 1.3 : 0.5;
-      // }
-
-      // console.log(demand)
-
       return (demand)
-      // + random.uniform(-0.1, 0.1)) * 1.3;
+
 
 
 
@@ -4834,11 +4731,11 @@
     Simulation.prototype.buyGlass = function (customer) {
       if (!this.soldOut && this.inPitcher > 0 &&
         state.data.cups > 0 &&
-        // state.data.ice >= state.data.recipeIce) {
+
         state.data.lemons >= state.data.recipeLemons) {
 
         this.inPitcher -= 1;
-        // state.data.ice -= state.data.recipeIce;
+
         state.data.lemons -= state.data.recipeLemons;
         state.data.cups -= 1;
         state.data.money += state.data.price;
@@ -4865,9 +4762,7 @@
       var opinion = 0.8 + Math.random() * 0.4;
       opinion *= state.data.recipeLemons / 4;
       opinion *= state.data.recipeSugar / 4;
-      // opinion *= state.data.recipeIce / 1;
-      // opinion *= state.data.recipeIce / ((state.data.temperatureFarenheit - 50) / 15) + 1;
-      // opinion *= ((state.data.temperatureFarenheit - 50) / 15 + 1) / (state.data.recipeIce + 4);
+
       opinion *= (state.data.temperatureFarenheit / 2 - state.data.price) / (state.data.temperatureFarenheit / 2) + 1;
       opinion = Math.min(Math.max(opinion, 0), 2);
       state.data.reputation += opinion;
@@ -5025,13 +4920,6 @@
 
       if (this.onStop)
         this.onStop.call(null, this);
-
-      // if (state.data.sugar >= state.data.recipeSugar)
-      //   state.data.sugar -= state.data.recipeSugar;
-      //   console.log("you used `$.(state.data.recipeSugar)` fliers today!");
-
-      // if (state.data.ice > state.data.recipeIce)
-      //   state.data.ice -= state.data.recipeIce;
 
     };
 
